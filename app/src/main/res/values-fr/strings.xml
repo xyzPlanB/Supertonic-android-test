@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">Supertonic TTS</string>
+    
+    <!-- Main Activity -->
+    <string name="default_input_text">Bonjour tout le monde, c\'est Supertonic TTS sur Android. Sélectionnez une voix et une vitesse ci-dessous !</string>
+    <string name="voice_style_label">Style de Voix</string>
+    <string name="mix_voices_label">Mélanger les voix</string>
+    <string name="voice_style_2_label">Voix secondaire</string>
+    <string name="mix_ratio_label">Ratio de mélange</string>
+    <string name="speed_label">Vitesse</string>
+    <string name="quality_label">Qualité</string>
+    <string name="synthesize_button">Synthétiser</string>
+    <string name="loading_engine">Chargement du moteur…</string>
+    <string name="initializing">Initialisation…</string>
+    <string name="ready_soc_fmt">Prêt (SoC : %1$s)</string>
+    <string name="init_failed">Échec de l\'initialisation</string>
+    <string name="engine_error">Erreur moteur</string>
+    <string name="asset_copy_failed">Échec de la copie des ressources</string>
+    <string name="asset_error">Erreur de ressources</string>
+    <string name="shared_text">Texte partagé</string>
+    <string name="fetched_web_text">Texte web récupéré</string>
+    <string name="resume_title">Reprendre la lecture ?</string>
+    <string name="resume_message">Souhaitez-vous continuer la lecture là où vous vous étiez arrêté ?</string>
+    <string name="resume_button">Reprendre</string>
+    <string name="resume_content_description">Reprendre la dernière lecture</string>
+    <string name="play_selected_title">Lire le texte sélectionné ?</string>
+    <string name="play_selected_message">Souhaitez-vous lancer la synthèse de ce texte immédiatement ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="cancel">Annuler</string>
+    <string name="delete">Supprimer</string>
+    <string name="ok">OK</string>
+    <string name="playback_active_title">Lecture active</string>
+    <string name="playback_active_message">L\'audio est en cours de lecture. Souhaitez-vous ajouter ce texte à la file d\'attente ou le lire immédiatement ?</string>
+    <string name="add_to_queue">Ajouter à la file d\'attente</string>
+    <string name="play_now">Lire maintenant</string>
+    <string name="added_to_queue">Ajouté à la file d\'attente</string>
+
+    <string name="v2_download_title">Télécharger les modèles multilingues ?</string>
+    <string name="v2_download_message">La prise en charge du français, de l\'espagnol, du portugais et du coréen nécessite un téléchargement supplémentaire (~255 Mo). Voulez-vous le télécharger maintenant ?</string>
+    <string name="v2_download_button">Télécharger</string>
+    <string name="v2_delete_title">Supprimer les modèles multilingues ?</string>
+    <string name="v2_delete_message">Cela supprimera tous les modèles multilingues et styles de voix pour libérer de l\'espace (~255 Mo). Vous pourrez les télécharger à nouveau plus tard si nécessaire.</string>
+    <string name="v2_deleted_msg">Modèles multilingues supprimés</string>
+
+    <string name="v3_download_title">Télécharger le modèle v3 ?</string>
+    <string name="v3_download_message">La prise en charge du japonais, de l\'arabe, de l\'allemand, du hindi, du russe et de 21 autres langues nécessite un téléchargement supplémentaire (~380 Mo). Voulez-vous le télécharger maintenant ?</string>
+    <string name="v3_download_button">Télécharger</string>
+    <string name="v3_delete_title">Supprimer le modèle v3 ?</string>
+    <string name="v3_delete_message">Cela supprimera le modèle v3 et les styles de voix pour libérer de l\'espace (~380 Mo). Vous perdrez la prise en charge du japonais, de l\'arabe, de l\'allemand, du hindi, du russe et de 21 autres langues. Vous pourrez les télécharger à nouveau plus tard si nécessaire.</string>
+    <string name="v3_deleted_msg">Modèle v3 supprimé</string>
+
+    <!-- Playback Activity -->
+    <string name="now_playing_title">Lecture en cours</string>
+    <string name="saving_audio">Enregistrement de l\'audio…</string>
+    <string name="saved_to_fmt">Enregistré sous %1$s</string>
+    <string name="export_failed">Échec de l\'exportation</string>
+
+    <!-- History Activity -->
+    <string name="history_title">Historique</string>
+    <string name="clear_all_button">Tout effacer</string>
+
+    <!-- Saved Audio Activity -->
+    <string name="saved_audio_title">Audio enregistré</string>
+    <string name="delete_audio_title">Supprimer l\'audio</string>
+    <string name="delete_audio_message_fmt">Êtes-vous sûr de vouloir supprimer %1$s ?</string>
+
+    <!-- Lexicon Activity -->
+    <string name="lexicon_title">Dictionnaire de prononciation</string>
+    <string name="lexicon_empty_state">Aucune règle personnalisée pour le moment.\nAjoutez des termes pour corriger la prononciation.</string>
+    <string name="add_term_button">Ajouter un terme</string>
+    <string name="add_rule_title">Ajouter une règle de prononciation</string>
+    <string name="term_hint">Terme (ex. LLMs)</string>
+    <string name="replacement_hint">Remplacement (ex. L L Ems)</string>
+    <string name="ignore_case_label">Ignorer la casse</string>
+    <string name="test_button">Tester</string>
+    <string name="testing_pronunciation_fmt">Test de la prononciation de %1$s</string>
+    <string name="save_button">Enregistrer</string>
+    <string name="enter_replacement_msg">Entrez un remplacement pour tester</string>
+    <string name="empty_fields_msg">Le terme et le remplacement ne peuvent pas être vides</string>
+    <string name="no_rules_export">Aucune règle à exporter</string>
+    <string name="export_failed_fmt">Échec de l\'exportation : %1$s</string>
+    <string name="import_error">Erreur d\'importation : fichier JSON invalide</string>
+    <string name="no_valid_rules">Aucune règle valide trouvée dans le fichier</string>
+    <string name="import_complete_title">Importation terminée</string>
+    <string name="import_stats_fmt">%1$d nouveaux termes ajoutés.\n%2$d termes mis à jour.</string>
+    <string name="import_no_changes">Tous les termes existent déjà et sont à jour.</string>
+    <string name="export_chooser_title">Exporter le lexique</string>
+
+    <!-- Menus -->
+    <string name="action_reset">Réinitialiser</string>
+    <string name="action_open_ebook">Ouvrir un livre électronique (EPUB/PDF)</string>
+    <string name="action_saved">Audio enregistré</string>
+    <string name="action_history">Historique</string>
+    <string name="action_queue">File d\'attente</string>
+    <string name="action_lexicon">Lexique</string>
+    <string name="action_delete_v2">Supprimer les modèles multilingues</string>
+    <string name="action_import">Importer JSON</string>
+    <string name="action_export">Exporter JSON</string>
+    
+    <string name="synthesize_content_description">Synthétiser et lire la parole</string>
+    <string name="input_label">Entrée</string>
+    <string name="language_label">Langue</string>
+    <string name="lang_english">Anglais</string>
+    <string name="lang_french">Français</string>
+    <string name="lang_portuguese">Portugais</string>
+    <string name="lang_spanish">Espagnol</string>
+    <string name="lang_korean">Coréen</string>
+    <string name="advanced_normalization_label">Normalisation avancée</string>
+    <string name="advanced_normalization_desc">Applique les règles de type anglais pour les nombres, les unités, etc.</string>
+
+    <!-- Notifications -->
+    <string name="notif_synthesizing">Synthèse en cours…</string>
+    <string name="notif_playing">Lecture audio</string>
+    <string name="notif_paused">En pause</string>
+    <string name="notif_exporting">Exportation audio…</string>
+
+    <string name="downloading_models">Téléchargement des modèles</string>
+    <string name="download_failed">Échec du téléchargement</string>
+    <string name="retry_download">Réessayer le téléchargement</string>
+    <string name="download_message_v1">Téléchargement des modèles anglais standard (~255 Mo). Il s\'agit d\'une configuration unique pour la synthèse en anglais.</string>
+    <string name="download_message_v2">Téléchargement des modèles multilingues (~255 Mo). Cela active le support du français, de l\'espagnol, du portugais et du coréen. Ce téléchargement spécifique ne se produit qu\'une seule fois.</string>
+    <string name="download_message_v3">Téléchargement des modèles multilingues (~380 Mo). Cela active le support du japonais, de l\'arabe, de l\'allemand, de l\'hindi, du russe et de 21 autres langues. Ce téléchargement spécifique ne se produit qu\'une seule fois.</string>
+
+    <!-- Voices -->
+    <string name="voice_m1">Alex - Vif, Enjoué</string>
+    <string name="voice_m2">James - Profond, Calme</string>
+    <string name="voice_m3">Robert - Raffiné, Autoritaire</string>
+    <string name="voice_m4">Sam - Doux, Amical</string>
+    <string name="voice_m5">Daniel - Chaleureux, Apaisant</string>
+    <string name="voice_f1">Sarah - Calme, Posée</string>
+    <string name="voice_f2">Lily - Brillante, Joyeuse</string>
+    <string name="voice_f3">Jessica - Professionnelle, Claire</string>
+    <string name="voice_f4">Olivia - Nette, Confiante</string>
+    <string name="voice_f5">Emily - Aimable, Douce</string>
+</resources>

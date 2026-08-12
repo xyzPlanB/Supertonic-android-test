@@ -1,0 +1,254 @@
+//file:noinspection GrDeprecatedAPIUsage
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.plugin.compose'
+    id 'net.mullvad.rust-android'
+}
+
+// --- HELPER FUNCTIONS ---
+
+// Extract properties dynamically across all build environments
+def getRustTargets() {
+    // 1. Command Line (highest priority): -PrustTargets=arm64
+    // Used by F-Droid and GitHub Actions.
+    if (project.hasProperty('rustTargets')) {
+        return project.property('rustTargets').toString().split(',') as List
+    }
+
+    // 2. Always build all for Play Store App Bundles
+    // Ensures bundleRelease has everything unless explicitly overridden by #1.
+    def isBundle = gradle.startParameter.taskNames.any { it.toLowerCase().contains("bundle") }
+    if (isBundle) return ["arm64", "arm", "x86", "x86_64"]
+
+    // 3. Check local.properties (local development fallback): rust.targets=arm64
+    def localProps = new Properties()
+    def localPropsFile = project.rootProject.file('local.properties')
+    if (localPropsFile.exists()) {
+        localPropsFile.withInputStream { localProps.load(it) }
+        if (localProps.containsKey('rust.targets')) {
+            return localProps.getProperty('rust.targets').split(',') as List
+        }
+    }
+
+    // 4. Default Fallback
+    return ["arm64", "arm", "x86", "x86_64"]
+}
+
+def getAndroidAbiFilters() {
+    def targets = getRustTargets()
+    def filters = []
+    if (targets.contains("arm64")) filters.add("arm64-v8a")
+    if (targets.contains("arm")) filters.add("armeabi-v7a")
+    if (targets.contains("x86")) filters.add("x86")
+    if (targets.contains("x86_64")) filters.add("x86_64")
+    return filters
+}
+
+def isSplitApksEnabled() {
+    return project.hasProperty('splitApks') && project.property('splitApks').toString().toBoolean()
+}
+
+configurations {
+    onnxRuntime
+}
+
+// --- RUST / CARGO CONFIGURATION ---
+
+cargo {
+    module = "../rust"
+    libname = "supertonic_tts"
+    targets = getRustTargets()
+    profile = "release"
+    pythonCommand = "python"
+
+    // F-Droid & Environment Toolchain Path Resolution
+    def home = System.getenv("HOME")
+    def candidatePaths = ["${home}/.cargo/bin", "/home/vagrant/.cargo/bin", "/usr/local/cargo/bin", "/usr/bin"]
+    def resolvedCargo = null
+    def resolvedRustc = null
+
+    candidatePaths.each { loc ->
+        def cargoFile = new File(loc, "cargo")
+        def rustcFile = new File(loc, "rustc")
+        if (cargoFile.exists() && resolvedCargo == null) resolvedCargo = cargoFile.absolutePath
+        if (rustcFile.exists() && resolvedRustc == null) resolvedRustc = rustcFile.absolutePath
+    }
+
+    if (resolvedCargo) cargoCommand = resolvedCargo
+    if (resolvedRustc) rustcCommand = resolvedRustc
+}
+
+// --- NATIVE LIBRARY TASKS ---
+
+tasks.register('extractOnnxLib', Copy) {
+    from(configurations.onnxRuntime.elements.map { zipTree(it.first().asFile) })
+    into layout.buildDirectory.dir("onnxruntime")
+    include "jni/**/libonnxruntime.so"
+}
+
+tasks.register('copyRustLibs', Sync) {
+    dependsOn 'cargoBuild'
+    from layout.buildDirectory.dir("rustJniLibs/android")
+    into layout.buildDirectory.dir("finalJniLibs")
+
+    // Explicitly filter to only include targets requested for THIS build.
+    // Sync will automatically delete any existing folders in finalJniLibs
+    // that are NOT in the include list (preventing stale libraries from previous builds).
+    def abiFilters = getAndroidAbiFilters()
+    include { details ->
+        if (details.directory) return true
+        abiFilters.any { abi -> details.relativePath.segments.contains(abi) }
+    }
+}
+
+tasks.configureEach { task ->
+    if (task.name.startsWith('cargoBuild')) {
+        task.dependsOn extractOnnxLib
+        if (task.hasProperty('environment')) {
+            task.environment 'ORT_LIB_LOCATION', "${layout.buildDirectory.get().asFile}/onnxruntime/jni"
+            task.environment 'ORT_SKIP_DOWNLOAD', '1'
+        }
+    }
+    if (task.name.startsWith('merge') && (task.name.endsWith('NativeLibs') || task.name.endsWith('JniLibFolders'))) {
+        task.dependsOn copyRustLibs
+    }
+}
+
+// ABI-specific version code math for F-Droid
+ext.abiCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2, 'x86': 3, 'x86_64': 4]
+
+// --- ANDROID CONFIGURATION ---
+
+android {
+    namespace = 'com.brahmadeo.supertonic.tts'
+    compileSdk = 37
+    ndkVersion = "29.0.14206865"
+
+    defaultConfig {
+        applicationId = "com.brahmadeo.supertonic.tts"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 24
+        versionName = "3.2.7"
+
+        if (!isSplitApksEnabled()) {
+            ndk {
+                abiFilters.addAll(getAndroidAbiFilters())
+            }
+        }
+
+        // Cargo.targets handles the build, and splits handles the packaging.
+    }
+
+    splits {
+        abi {
+            enable = isSplitApksEnabled()
+            reset()
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            universalApk = false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        compose = true
+        aidl = true
+    }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+            pickFirst '**/libonnxruntime.so'
+            pickFirst '**/libsupertonic_tts.so'
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.forEach { output ->
+            def abiFilter = output.filters.find { it.filterType.name() == 'ABI' }
+            if (abiFilter != null) {
+                def abi = abiFilter.identifier
+                def baseAbiCode = project.ext.abiCodes.get(abi)
+                if (baseAbiCode != null) {
+                    output.versionCode.set(android.defaultConfig.versionCode * 1000000 + baseAbiCode)
+                }
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    android.sourceSets.main.jniLibs.setSrcDirs(["src/main/jniLibs", layout.buildDirectory.dir("finalJniLibs").get().asFile.absolutePath])
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+        freeCompilerArgs.addAll(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=org.readium.r2.shared.InternalReadiumApi",
+            "-opt-in=org.readium.r2.shared.ExperimentalReadiumApi"
+        )
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+    implementation 'androidx.core:core-ktx:1.19.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.11.0'
+    implementation 'com.google.android.material:material:1.14.0'
+
+    // UI structure and Audio Session handling
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.media:media:1.8.0'
+
+    // Compose Stack
+    def composeBom = platform('androidx.compose:compose-bom:2026.06.01')
+    implementation composeBom
+    implementation 'androidx.activity:activity-compose:1.13.0'
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.compose.material3:material3:1.4.0'
+    implementation 'androidx.compose.material:material-icons-extended'
+
+    // ONNX Runtime (double implementation/configuration)
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.27.0'
+    onnxRuntime 'com.microsoft.onnxruntime:onnxruntime-android:1.27.0'
+
+    // Readium Toolkit
+    implementation "org.readium.kotlin-toolkit:readium-shared:$readium_version"
+    implementation "org.readium.kotlin-toolkit:readium-streamer:$readium_version"
+    implementation ("org.readium.kotlin-toolkit:readium-adapter-pdfium:$readium_version") {
+        exclude group: 'androidx.media3', module: 'media3-common-ktx'
+    }
+
+    implementation 'com.tom-roush:pdfbox-android:2.0.27.0'
+    implementation 'org.jsoup:jsoup:1.22.2'
+
+    // Tooling and Tests
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20260719'
+}

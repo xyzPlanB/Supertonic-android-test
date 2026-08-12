@@ -1,0 +1,138 @@
+<resources>
+    <string name="app_name">Supertonic TTS</string>
+    
+    <!-- Main Activity -->
+    <string name="default_input_text">안녕하세요, 안드로이드용 Supertonic TTS입니다. 아래에서 목소리와 속도를 선택하세요!</string>
+    <string name="voice_style_label">목소리 스타일</string>
+    <string name="mix_voices_label">목소리 혼합</string>
+    <string name="voice_style_2_label">보조 목소리</string>
+    <string name="mix_ratio_label">혼합 비율</string>
+    <string name="speed_label">속도</string>
+    <string name="quality_label">품질</string>
+    <string name="synthesize_button">음성 합성</string>
+    <string name="loading_engine">엔진 로딩 중…</string>
+    <string name="initializing">초기화 중…</string>
+    <string name="ready_soc_fmt">준비됨 (SoC: %1$s)</string>
+    <string name="init_failed">초기화 실패</string>
+    <string name="engine_error">엔진 오류</string>
+    <string name="asset_copy_failed">에셋 복사 실패</string>
+    <string name="asset_error">에셋 오류</string>
+    <string name="shared_text">공유된 텍스트</string>
+    <string name="fetched_web_text">가져온 웹 텍스트</string>
+    <string name="resume_title">재생을 재개할까요?</string>
+    <string name="resume_message">중단된 지점부터 계속 읽으시겠습니까?</string>
+    <string name="resume_button">재개</string>
+    <string name="resume_content_description">마지막 재생 재개</string>
+    <string name="play_selected_title">선택한 텍스트를 재생할까요?</string>
+    <string name="play_selected_message">이 텍스트의 음성 합성을 즉시 시작하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니요</string>
+    <string name="cancel">취소</string>
+    <string name="delete">삭제</string>
+    <string name="ok">확인</string>
+    <string name="playback_active_title">재생 중</string>
+    <string name="playback_active_message">오디오가 현재 재생 중입니다. 이 텍스트를 대기열에 추가하시겠습니까, 아니면 즉시 재생하시겠습니까?</string>
+    <string name="add_to_queue">대기열에 추가</string>
+    <string name="play_now">즉시 재생</string>
+    <string name="added_to_queue">대기열에 추가됨</string>
+
+    <string name="v2_download_title">다국어 모델을 다운로드할까요?</string>
+    <string name="v2_download_message">프랑스어, 스페인어, 포르투갈어 및 한국어를 지원하려면 추가 다운로드(~255MB)가 필요합니다. 지금 다운로드하시겠습니까?</string>
+    <string name="v2_download_button">다운로드</string>
+    <string name="v2_delete_title">다국어 모델을 삭제할까요?</string>
+    <string name="v2_delete_message">모든 다국어 모델과 음성 스타일이 삭제되어 공간(~255MB)을 확보합니다. 나중에 필요할 때 다시 다운로드할 수 있습니다.</string>
+    <string name="v2_deleted_msg">다국어 모델이 삭제되었습니다.</string>
+
+    <string name="v3_download_title">v3 모델을 다운로드할까요?</string>
+    <string name="v3_download_message">일본어, 아랍어, 독일어, 힌디어, 러시아어 및 21개의 다른 언어를 지원하려면 추가 다운로드(~380MB)가 필요합니다. 지금 다운로드하시겠습니까?</string>
+    <string name="v3_download_button">다운로드</string>
+    <string name="v3_delete_title">v3 모델을 삭제할까요?</string>
+    <string name="v3_delete_message">v3 모델과 음성 스타일이 삭제되어 공간(~380MB)을 확보합니다. 일본어, 아랍어, 독일어, 힌디어, 러시아어 및 21개의 다른 언어 지원을 잃게 됩니다. 나중에 필요할 때 다시 다운로드할 수 있습니다.</string>
+    <string name="v3_deleted_msg">v3 모델이 삭제되었습니다.</string>
+
+    <!-- Playback Activity -->
+    <string name="now_playing_title">현재 재생 중</string>
+    <string name="saving_audio">오디오 저장 중…</string>
+    <string name="saved_to_fmt">%1$s에 저장됨</string>
+    <string name="export_failed">내보내기 실패</string>
+
+    <!-- History Activity -->
+    <string name="history_title">기록</string>
+    <string name="clear_all_button">모두 삭제</string>
+
+    <!-- Saved Audio Activity -->
+    <string name="saved_audio_title">저장된 오디오</string>
+    <string name="delete_audio_title">오디오 삭제</string>
+    <string name="delete_audio_message_fmt">%1$s을(를) 삭제하시겠습니까?</string>
+
+    <!-- Lexicon Activity -->
+    <string name="lexicon_title">발음 사전</string>
+    <string name="lexicon_empty_state">아직 사용자 지정 규칙이 없습니다.
+발음을 교정할 단어를 추가하세요.</string>
+    <string name="add_term_button">단어 추가</string>
+    <string name="add_rule_title">발음 규칙 추가</string>
+    <string name="term_hint">단어 (예: LLMs)</string>
+    <string name="replacement_hint">대체 발음 (예: 엘 엘 엠즈)</string>
+    <string name="ignore_case_label">대소문자 무시</string>
+    <string name="test_button">테스트</string>
+    <string name="testing_pronunciation_fmt">%1$s의 발음 테스트 중</string>
+    <string name="save_button">저장</string>
+    <string name="enter_replacement_msg">테스트할 대체 발음을 입력하세요</string>
+    <string name="empty_fields_msg">단어와 대체 발음은 비워둘 수 없습니다</string>
+    <string name="no_rules_export">내보낼 규칙이 없습니다</string>
+    <string name="export_failed_fmt">내보내기 실패: %1$s</string>
+    <string name="import_error">가져오기 오류: 잘못된 JSON 파일</string>
+    <string name="no_valid_rules">파일에서 유효한 규칙을 찾을 수 없습니다</string>
+    <string name="import_complete_title">가져오기 완료</string>
+    <string name="import_stats_fmt">%1$d개의 새 단어가 추가되었습니다.
+%2$d개의 단어가 업데이트되었습니다.</string>
+    <string name="import_no_changes">모든 단어가 이미 존재하며 최신 상태입니다.</string>
+    <string name="export_chooser_title">사전 내보내기</string>
+
+    <!-- Menus -->
+    <string name="action_reset">초기화</string>
+    <string name="action_open_ebook">이북 열기 (EPUB/PDF)</string>
+    <string name="action_saved">저장된 오디오</string>
+    <string name="action_history">기록</string>
+    <string name="action_queue">대기열</string>
+    <string name="action_lexicon">사전</string>
+    <string name="action_delete_v2">다국어 모델 삭제</string>
+    <string name="action_import">JSON 가져오기</string>
+    <string name="action_export">JSON 내보내기</string>
+    
+    <string name="synthesize_content_description">음성 합성 및 재생</string>
+    <string name="input_label">입력</string>
+    <string name="language_label">언어</string>
+    <string name="lang_english">영어</string>
+    <string name="lang_french">프랑스어</string>
+    <string name="lang_portuguese">포르투갈어</string>
+    <string name="lang_spanish">스페인어</string>
+    <string name="lang_korean">한국어</string>
+    <string name="advanced_normalization_label">고급 정규화</string>
+    <string name="advanced_normalization_desc">숫자, 단위 등에 대해 영어식 규칙을 적용합니다.</string>
+
+    <!-- Notifications -->
+    <string name="notif_synthesizing">음성 합성 중…</string>
+    <string name="notif_playing">오디오 재생 중</string>
+    <string name="notif_paused">일시 정지됨</string>
+    <string name="notif_exporting">오디오 내보내는 중…</string>
+
+    <string name="downloading_models">Downloading Models</string>
+    <string name="download_failed">Download Failed</string>
+    <string name="retry_download">Retry Download</string>
+    <string name="download_message_v1">Downloading Standard English Models (~255MB). This is a one-time setup for English synthesis.</string>
+    <string name="download_message_v2">Downloading Multilingual Models (~255MB). This enables support for French, Spanish, Portuguese, and Korean. This specific download happens only once.</string>
+    <string name="download_message_v3">Downloading Multilingual Models (~380MB). This enables support for Japanese, Arabic, German, Hindi, Russian, and 21 other languages. This specific download happens only once.</string>
+
+    <!-- Voices -->
+    <string name="voice_m1">Alex - 활기차고 경쾌한</string>
+    <string name="voice_m2">James - 깊고 차분한</string>
+    <string name="voice_m3">Robert - 세련되고 권위있는</string>
+    <string name="voice_m4">Sam - 부드럽고 친근한</string>
+    <string name="voice_m5">Daniel - 따뜻하고 편안한</string>
+    <string name="voice_f1">Sarah - 차분하고 침착한</string>
+    <string name="voice_f2">Lily - 밝고 명랑한</string>
+    <string name="voice_f3">Jessica - 전문적이고 명확한</string>
+    <string name="voice_f4">Olivia - 또렷하고 자신감 있는</string>
+    <string name="voice_f5">Emily - 상냥하고 온화한</string>
+</resources>
