@@ -53,37 +53,7 @@ class MainActivity : ComponentActivity() {
 
     // Data
     private val languages = mapOf(
-        R.string.lang_english to "en",
-        R.string.lang_french to "fr",
-        R.string.lang_portuguese to "pt",
-        R.string.lang_spanish to "es",
-        R.string.lang_korean to "ko",
-        R.string.lang_japanese to "ja",
-        R.string.lang_arabic to "ar",
-        R.string.lang_bulgarian to "bg",
-        R.string.lang_czech to "cs",
-        R.string.lang_danish to "da",
-        R.string.lang_german to "de",
-        R.string.lang_greek to "el",
-        R.string.lang_estonian to "et",
-        R.string.lang_finnish to "fi",
-        R.string.lang_hindi to "hi",
-        R.string.lang_croatian to "hr",
-        R.string.lang_hungarian to "hu",
-        R.string.lang_indonesian to "id",
-        R.string.lang_italian to "it",
-        R.string.lang_lithuanian to "lt",
-        R.string.lang_latvian to "lv",
-        R.string.lang_dutch to "nl",
-        R.string.lang_polish to "pl",
-        R.string.lang_romanian to "ro",
-        R.string.lang_russian to "ru",
-        R.string.lang_slovak to "sk",
-        R.string.lang_slovenian to "sl",
-        R.string.lang_swedish to "sv",
-        R.string.lang_turkish to "tr",
-        R.string.lang_ukrainian to "uk",
-        R.string.lang_vietnamese to "vi"
+        R.string.lang_indonesian to "id"
     )
 
     private var currentModelVersion = "v1" // "v1", "v2", or "v3"
@@ -529,8 +499,7 @@ class MainActivity : ComponentActivity() {
                             val stopIntent = Intent(this, PlaybackService::class.java).apply { action = "STOP_PLAYBACK" }
                             startService(stopIntent)
                         },
-                        onSavedAudioClick = { startActivity(Intent(this, SavedAudioActivity::class.java)) },
-                        onHistoryClick = { historyLauncher.launch(Intent(this, HistoryActivity::class.java)) },
+                        
                         onQueueClick = { startActivity(Intent(this, QueueActivity::class.java)) },
                         onLexiconClick = { startActivity(Intent(this, LexiconActivity::class.java)) },
                         onDeleteV2Click = { viewModel.showV2DeleteDialog.value = true },
