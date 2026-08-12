@@ -113,9 +113,17 @@
             android:intentMatchingFlags="allowNullAction"
             tools:targetApi="37" />
 
+        <activity android:name=".HistoryActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="History" />
+
         <activity android:name=".QueueActivity"
             android:parentActivityName=".MainActivity"
             android:label="Queue" />
+
+        <activity android:name=".SavedAudioActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Saved Audio" />
 
         <activity android:name=".LexiconActivity"
             android:parentActivityName=".MainActivity"
