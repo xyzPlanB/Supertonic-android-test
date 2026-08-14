@@ -86,7 +86,7 @@ class MainActivity : ComponentActivity() {
         R.string.lang_vietnamese to "vi"
     )
 
-    private var currentModelVersion = "v1" // "v1", "v2", or "v3"
+    private var currentModelVersion = "v3" // "v1", "v2", or "v3"
 
     // Service
     private var playbackService: IPlaybackService? = null

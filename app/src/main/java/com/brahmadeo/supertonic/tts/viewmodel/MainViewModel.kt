@@ -36,7 +36,7 @@ class MainViewModel : ViewModel() {
 
     // Asset Download State
     var isDownloading = mutableStateOf(false)
-    var downloadingVersion = mutableStateOf("v1")
+    var downloadingVersion = mutableStateOf("v3")
     var downloadProgress = mutableFloatStateOf(0f)
     var downloadStatus = mutableStateOf("Checking assets...")
     var downloadedBytes = mutableLongStateOf(0L)
@@ -93,7 +93,7 @@ class MainViewModel : ViewModel() {
     companion object {
         const val DEFAULT_VOICE = "F3.json"
         const val DEFAULT_VOICE_2 = "M2.json"
-        const val DEFAULT_LANG = "en"
+        const val DEFAULT_LANG = "id"
         const val DEFAULT_SPEED = 1.1f
         const val DEFAULT_STEPS = 5
     }
