@@ -125,7 +125,7 @@ android {
 
     defaultConfig {
         applicationId = "com.brahmadeo.supertonic.tts"
-        minSdk = 24
+        minSdk = 30
         targetSdk = 37
         versionCode = 24
         versionName = "3.2.7"
